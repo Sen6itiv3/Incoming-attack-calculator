@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Incoming Attack Calculator</title>
 
 <style>
+
+/* =========================
+   GLOBAL
+========================= */
 
 *{
   box-sizing:border-box;
@@ -15,8 +21,13 @@
 body{
   margin:0;
   min-height:100vh;
+
   background:
-    radial-gradient(circle at top,#172554 0%,#0b1120 45%,#050816 100%);
+  radial-gradient(circle at top,
+  #172554 0%,
+  #0b1120 45%,
+  #050816 100%);
+
   font-family:Inter,Arial,sans-serif;
   color:white;
 }
@@ -27,18 +38,33 @@ body{
   padding:20px;
 }
 
+/* =========================
+   MAIN CARD
+========================= */
+
 .container{
+
   width:100%;
-  max-width:470px;
+  max-width:480px;
+
   background:rgba(15,23,42,0.84);
+
   border:1px solid rgba(255,255,255,0.06);
+
   border-radius:26px;
+
   padding:22px;
+
   backdrop-filter:blur(14px);
+
   box-shadow:
-    0 10px 40px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+  0 10px 40px rgba(0,0,0,0.35),
+  inset 0 1px 0 rgba(255,255,255,0.04);
 }
+
+/* =========================
+   NAVIGATION
+========================= */
 
 .nav{
   display:flex;
@@ -52,8 +78,16 @@ body{
 }
 
 .nav-active{
-  background:linear-gradient(135deg,#2563eb,#1d4ed8)!important;
+  background:
+  linear-gradient(
+  135deg,
+  #2563eb,
+  #1d4ed8)!important;
 }
+
+/* =========================
+   TYPOGRAPHY
+========================= */
 
 .title{
   text-align:center;
@@ -66,40 +100,10 @@ body{
   font-size:13px;
   opacity:0.75;
   margin-bottom:8px;
+
   display:flex;
   align-items:center;
   gap:6px;
-}
-
-.input-wrapper{
-  position:relative;
-}
-
-.input-box{
-  width:100%;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,0.06);
-  border-radius:16px;
-  padding:15px;
-  color:white;
-  font-size:14px;
-  outline:none;
-}
-
-.input-box::placeholder{
-  color:rgba(255,255,255,0.45);
-  font-style:italic;
-  font-size:13px;
-}
-
-.clear-input{
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-50%);
-  opacity:0.45;
-  cursor:pointer;
-  font-size:14px;
 }
 
 .helper{
@@ -123,20 +127,83 @@ body{
   opacity:0.75;
 }
 
-.quick-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
+.label{
+  font-size:11px;
+  opacity:0.55;
+  margin-bottom:7px;
+  margin-top:14px;
+  font-style:italic;
 }
 
-button{
-  border:none;
-  border-radius:14px;
-  padding:13px 10px;
+/* =========================
+   INPUTS
+========================= */
+
+.input-wrapper{
+  position:relative;
+}
+
+.input-box{
+
+  width:100%;
+
+  background:#0f172a;
+
+  border:
+  1px solid rgba(255,255,255,0.06);
+
+  border-radius:16px;
+
+  padding:15px;
+
   color:white;
+
+  font-size:14px;
+
+  outline:none;
+}
+
+.input-box::placeholder{
+  color:rgba(255,255,255,0.45);
+  font-style:italic;
+  font-size:13px;
+}
+
+.clear-input{
+
+  position:absolute;
+
+  right:14px;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  opacity:0.45;
+
+  cursor:pointer;
+
+  font-size:14px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+
+  border:none;
+
+  border-radius:14px;
+
+  padding:13px 10px;
+
+  color:white;
+
   font-size:12px;
   font-weight:600;
+
   cursor:pointer;
+
   transition:0.15s;
 }
 
@@ -144,19 +211,42 @@ button:active{
   transform:scale(0.97);
 }
 
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
 .hour-btn{
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  background:
+  linear-gradient(
+  135deg,
+  #2563eb,
+  #1d4ed8);
 }
 
 .min-btn{
-  background:linear-gradient(135deg,#9333ea,#7e22ce);
+  background:
+  linear-gradient(
+  135deg,
+  #9333ea,
+  #7e22ce);
 }
 
 .generate{
+
   width:100%;
+
   margin-top:22px;
-  background:linear-gradient(135deg,#0f766e,#14b8a6);
+
+  background:
+  linear-gradient(
+  135deg,
+  #0f766e,
+  #14b8a6);
+
   opacity:0.45;
+
   pointer-events:none;
 }
 
@@ -166,62 +256,118 @@ button:active{
 }
 
 .clear-btn{
-  width:100%;
-  margin-top:10px;
-  background:linear-gradient(135deg,#b91c1c,#dc2626);
-}
 
-.output{
-  margin-top:18px;
-  background:#0b1220;
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:18px;
-  padding:18px;
-  white-space:pre-wrap;
-  font-size:13px;
-  line-height:1.8;
-  color:#dbeafe;
-  min-height:170px;
+  width:100%;
+
+  margin-top:10px;
+
+  background:
+  linear-gradient(
+  135deg,
+  #b91c1c,
+  #dc2626);
 }
 
 .copy-btn{
+
   width:100%;
+
   margin-top:12px;
-  background:linear-gradient(135deg,#16a34a,#22c55e);
+
+  background:
+  linear-gradient(
+  135deg,
+  #16a34a,
+  #22c55e);
 }
 
+/* =========================
+   OUTPUT BOX
+========================= */
+
+.output{
+
+  margin-top:18px;
+
+  background:#0b1220;
+
+  border:
+  1px solid rgba(255,255,255,0.05);
+
+  border-radius:18px;
+
+  padding:18px;
+
+  white-space:pre-wrap;
+
+  font-size:13px;
+
+  line-height:1.7;
+
+  color:#dbeafe;
+
+  min-height:170px;
+}
+
+/* =========================
+   INFO BOX
+========================= */
+
 .info{
+
   margin-top:16px;
-  background:rgba(37,99,235,0.12);
-  border:1px solid rgba(37,99,235,0.3);
+
+  background:
+  rgba(37,99,235,0.12);
+
+  border:
+  1px solid rgba(37,99,235,0.3);
+
   border-radius:16px;
+
   padding:14px;
+
   font-size:12px;
+
   line-height:1.6;
+
   color:#bfdbfe;
 }
 
-.label{
-  font-size:11px;
-  opacity:0.55;
-  margin-bottom:7px;
-  margin-top:14px;
-  font-style:italic;
+/* =========================
+   WARNING
+========================= */
+
+.warning{
+
+  background:
+  rgba(220,38,38,0.12);
+
+  border:
+  1px solid rgba(220,38,38,0.35);
+
+  color:#fecaca;
+
+  padding:14px;
+
+  border-radius:16px;
+
+  margin-bottom:16px;
+
+  font-size:12px;
 }
+
+/* =========================
+   UTILITIES
+========================= */
 
 .hidden{
   display:none;
 }
 
-.warning{
-  background:rgba(220,38,38,0.12);
-  border:1px solid rgba(220,38,38,0.35);
-  color:#fecaca;
-  padding:14px;
-  border-radius:16px;
-  margin-bottom:16px;
-  font-size:12px;
-}
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:480px){
 
@@ -236,6 +382,7 @@ button:active{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -244,31 +391,60 @@ button:active{
 
 <div class="container">
 
+<!-- =========================
+     NAVIGATION
+========================= -->
+
 <div class="nav">
-<button id="nav1" class="nav-active" onclick="showPage('page1')">
+
+<button
+id="nav1"
+class="nav-active"
+onclick="showPage('page1')">
+
 Attack Calculator
+
 </button>
 
-<button id="nav2" onclick="goDefensePage()">
+<button
+id="nav2"
+onclick="goDefensePage()">
+
 Defense Call Maker
+
 </button>
+
 </div>
 
-<!-- PAGE 1 -->
+<!-- =========================
+     PAGE 1
+========================= -->
 
 <div id="page1">
 
-<div class="title">⚔️ Incoming Attack Calculator</div>
+<div class="title">
+⚔️ Incoming Attack Calculator
+</div>
 
-<div class="section-title">🕒 Set Time</div>
+<div class="section-title">
+🕒 Set Time
+</div>
 
 <div class="input-wrapper">
+
 <input
 id="durationInput"
 class="input-box"
 placeholder="Example: 2h 30 min"
 />
-<div class="clear-input" onclick="clearField('durationInput')">✕</div>
+
+<div
+class="clear-input"
+onclick="clearField('durationInput')">
+
+✕
+</div>
+
 </div>
 
 <div class="helper">
@@ -278,102 +454,238 @@ Format: 2h 30 min, 1h, 45m, 3h 15m
 <div class="or">Or</div>
 
 <div class="input-wrapper">
+
 <input
 id="serverInput"
 class="input-box"
 placeholder="Server landing time 16:42"
 />
-<div class="clear-input" onclick="clearField('serverInput')">✕</div>
+
+<div
+class="clear-input"
+onclick="clearField('serverInput')">
+
+✕
 </div>
 
-<div class="quick-title">⚡ Quick Add</div>
+</div>
+
+<div class="quick-title">
+⚡ Quick Add
+</div>
 
 <div class="quick-grid">
-<button class="hour-btn" onclick="addHours(1)">+1h</button>
-<button class="hour-btn" onclick="addHours(2)">+2h</button>
-<button class="hour-btn" onclick="addHours(3)">+3h</button>
-<button class="hour-btn" onclick="addHours(6)">+6h</button>
+
+<button
+class="hour-btn"
+onclick="addHours(1)">
+
++1h
+
+</button>
+
+<button
+class="hour-btn"
+onclick="addHours(2)">
+
++2h
+
+</button>
+
+<button
+class="hour-btn"
+onclick="addHours(3)">
+
++3h
+
+</button>
+
+<button
+class="hour-btn"
+onclick="addHours(6)">
+
++6h
+
+</button>
+
 </div>
 
 <div style="height:10px;"></div>
 
 <div class="quick-grid">
-<button class="min-btn" onclick="addMinutes(1)">+1m</button>
-<button class="min-btn" onclick="addMinutes(5)">+5m</button>
-<button class="min-btn" onclick="addMinutes(10)">+10m</button>
-<button class="min-btn" onclick="addMinutes(30)">+30m</button>
+
+<button
+class="min-btn"
+onclick="addMinutes(1)">
+
++1m
+
+</button>
+
+<button
+class="min-btn"
+onclick="addMinutes(5)">
+
++5m
+
+</button>
+
+<button
+class="min-btn"
+onclick="addMinutes(10)">
+
++10m
+
+</button>
+
+<button
+class="min-btn"
+onclick="addMinutes(30)">
+
++30m
+
+</button>
+
 </div>
 
-<button id="generateBtn" class="generate" onclick="generateTimer()">
+<button
+id="generateBtn"
+class="generate"
+onclick="generateTimer()">
+
 ⚡ Generate Discord Timer
+
 </button>
 
-<button class="clear-btn" onclick="clearAll()">
+<button
+class="clear-btn"
+onclick="clearAll()">
+
 🗑️ Clear
+
 </button>
 
-<div class="output" id="output">
+<div
+class="output"
+id="output">
+
 Your Discord timer will appear here...
+
 </div>
 
-<button class="copy-btn" onclick="copyTimer()">
+<button
+class="copy-btn"
+onclick="copyTimer()">
+
 📋 Copy To Discord
+
 </button>
 
 <div class="info">
+
 ℹ️ <b>How to use</b><br><br>
+
 Paste the timestamp in Discord and everyone will see their local time and live countdown.
-</div>
 
 </div>
 
-<!-- PAGE 2 -->
+</div>
+
+<!-- =========================
+     PAGE 2
+========================= -->
 
 <div id="page2" class="hidden">
 
-<div class="title">🛡️ Defense Call Maker</div>
-
-<div id="warningBox" class="warning hidden">
-⚠️ Please generate a Discord Timestamp first.
+<div class="title">
+🛡️ Defense Call Maker
 </div>
 
-<div class="label">1. Name of the attacker? *</div>
+<div
+id="warningBox"
+class="warning hidden">
+
+⚠️ Please generate a Discord Timestamp first.
+
+</div>
+
+<div class="label">
+1. Name of the attacker? *
+</div>
+
 <input class="input-box" id="attacker">
 
-<div class="label">2. Which village you need defense? *</div>
-<input class="input-box" id="village">
-
-<div class="label">3. Exact time the attack will arrive? *</div>
-<input class="input-box" id="arrival">
-
-<div class="label">4. How many waves are incoming? *</div>
-<input class="input-box" id="waves">
-
-<div class="label">5. Wall level / Watch Tower level? *</div>
-<input class="input-box" id="tower">
-
-<div class="label">6. Food situation? *</div>
-<input class="input-box" id="food">
-
-<div class="label">7. Total size of your granary? *</div>
-<input class="input-box" id="granary">
-
-<div class="label">8. Current defensive troops in that village? *</div>
-<input class="input-box" id="troops">
-
-<div class="label">9. How much extra troops do you need? *</div>
-<input class="input-box" id="needed">
-
-<button class="generate active" style="margin-top:22px;" onclick="generateDefense()">
-⚡ Generate Defense Call Report
-</button>
-
-<div class="output" id="deffOutput">
-Your defense report will appear here...
+<div class="label">
+2. Which village needs defense? *
 </div>
 
-<button class="copy-btn" onclick="copyDefense()">
+<input class="input-box" id="village">
+
+<div class="label">
+3. Exact time the attack arrives? *
+</div>
+
+<input class="input-box" id="arrival">
+
+<div class="label">
+4. How many waves incoming? *
+</div>
+
+<input class="input-box" id="waves">
+
+<div class="label">
+5. Wall level / Watch Tower level? *
+</div>
+
+<input class="input-box" id="tower">
+
+<div class="label">
+6. Food situation? *
+</div>
+
+<input class="input-box" id="food">
+
+<div class="label">
+7. Total granary size? *
+</div>
+
+<input class="input-box" id="granary">
+
+<div class="label">
+8. Current defensive troops? *
+</div>
+
+<input class="input-box" id="troops">
+
+<div class="label">
+9. Extra troops needed? *
+</div>
+
+<input class="input-box" id="needed">
+
+<button
+class="generate active"
+style="margin-top:22px;"
+onclick="generateDefense()">
+
+⚡ Generate Defense Report
+
+</button>
+
+<div
+class="output"
+id="deffOutput">
+
+Your defense report will appear here...
+
+</div>
+
+<button
+class="copy-btn"
+onclick="copyDefense()">
+
 📋 Copy To Discord
+
 </button>
 
 </div>
@@ -384,9 +696,18 @@ Your defense report will appear here...
 
 <script>
 
+/* =========================
+   GLOBAL STATE
+========================= */
+
 let generatedTimestamp = "";
 let generatedDiscordText = "";
 let generatedDefenseText = "";
+let startDurationText = "";
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const durationInput =
 document.getElementById("durationInput");
@@ -397,9 +718,16 @@ document.getElementById("serverInput");
 const generateBtn =
 document.getElementById("generateBtn");
 
+/* =========================
+   BUTTON ENABLE/DISABLE
+========================= */
+
 function updateGenerateButton(){
 
-if(durationInput.value.trim() || serverInput.value.trim()){
+if(
+durationInput.value.trim() ||
+serverInput.value.trim()
+){
 generateBtn.classList.add("active");
 }else{
 generateBtn.classList.remove("active");
@@ -407,35 +735,90 @@ generateBtn.classList.remove("active");
 
 }
 
-durationInput.addEventListener("input",updateGenerateButton);
-serverInput.addEventListener("input",updateGenerateButton);
+/* =========================
+   INPUT LISTENERS
+========================= */
+
+durationInput.addEventListener(
+"input",
+updateGenerateButton
+);
+
+serverInput.addEventListener(
+"input",
+updateGenerateButton
+);
+
+/* =========================
+   CLEAR SINGLE FIELD
+========================= */
 
 function clearField(id){
-document.getElementById(id).value="";
-updateGenerateButton();
+
+document.getElementById(id).value = "";
+
+resetGeneratedData();
+
 }
+
+/* =========================
+   RESET ALL GENERATED DATA
+========================= */
+
+function resetGeneratedData(){
+
+generatedTimestamp = "";
+generatedDiscordText = "";
+generatedDefenseText = "";
+startDurationText = "";
+
+output.innerText =
+"Your Discord timer will appear here...";
+
+deffOutput.innerText =
+"Your defense report will appear here...";
+
+arrival.value = "";
+
+updateGenerateButton();
+
+}
+
+/* =========================
+   PARSE INPUT
+========================= */
 
 function parseInput(str){
 
 let h = 0;
 let m = 0;
 
-const hr = str.match(/(\d+)\s*h/i);
-const mn = str.match(/(\d+)\s*m/i);
+const hr =
+str.match(/(\d+)\s*h/i);
+
+const mn =
+str.match(/(\d+)\s*m/i);
 
 if(hr) h = parseInt(hr[1]);
 if(mn) m = parseInt(mn[1]);
 
-return (h*60)+m;
+return (h * 60) + m;
 
 }
+
+/* =========================
+   UPDATE INPUT
+========================= */
 
 function updateInput(total){
 
 total = Math.max(total,0);
 
-const h = Math.floor(total/60);
-const m = total%60;
+const h =
+Math.floor(total / 60);
+
+const m =
+total % 60;
 
 durationInput.value =
 `${h}h ${m}m`;
@@ -444,12 +827,16 @@ updateGenerateButton();
 
 }
 
+/* =========================
+   QUICK ADD
+========================= */
+
 function addHours(h){
 
 let total =
 parseInput(durationInput.value);
 
-total += h*60;
+total += h * 60;
 
 updateInput(total);
 
@@ -466,17 +853,20 @@ updateInput(total);
 
 }
 
+/* =========================
+   GENERATE TIMER
+========================= */
+
 function generateTimer(){
 
 let totalMinutes = 0;
-let startText = "";
 
 if(durationInput.value.trim()){
 
 totalMinutes =
 parseInput(durationInput.value);
 
-startText =
+startDurationText =
 durationInput.value;
 
 }
@@ -489,9 +879,12 @@ const parts =
 serverInput.value.split(":");
 
 if(parts.length !== 2){
+
 output.innerText =
 "❌ Invalid server time.";
+
 return;
+
 }
 
 const target =
@@ -514,13 +907,14 @@ Math.floor(totalMinutes/60);
 const m =
 totalMinutes%60;
 
-startText =
+startDurationText =
 `${h}h ${m}m`;
 
 }
 
 const future =
-Date.now()+(totalMinutes*60000);
+Date.now() +
+(totalMinutes * 60000);
 
 const unix =
 Math.floor(future/1000);
@@ -532,7 +926,7 @@ generatedDiscordText =
 `⚔️ Attack Incoming
 
 ⏳ Start Duration:
-${startText}
+${startDurationText}
 
 📅 Landing Time:
 <t:${unix}:F>
@@ -543,10 +937,14 @@ ${startText}
 output.innerText =
 generatedDiscordText;
 
-document.getElementById("arrival").value =
+arrival.value =
 `<t:${unix}:F>`;
 
 }
+
+/* =========================
+   COPY TIMER
+========================= */
 
 function copyTimer(){
 
@@ -569,29 +967,30 @@ btn.innerText =
 
 }
 
+/* =========================
+   CLEAR ALL
+========================= */
+
 function clearAll(){
 
 durationInput.value = "";
 serverInput.value = "";
 
-output.innerText =
-"Your Discord timer will appear here...";
-
-generatedDiscordText = "";
-
-updateGenerateButton();
+resetGeneratedData();
 
 }
 
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
 function showPage(id){
 
-document.getElementById("page1")
-.classList.add("hidden");
+page1.classList.add("hidden");
+page2.classList.add("hidden");
 
-document.getElementById("page2")
-.classList.add("hidden");
-
-document.getElementById(id)
+document
+.getElementById(id)
 .classList.remove("hidden");
 
 nav1.classList.remove("nav-active");
@@ -605,27 +1004,34 @@ nav2.classList.add("nav-active");
 
 }
 
+/* =========================
+   DEFENSE PAGE CHECK
+========================= */
+
 function goDefensePage(){
+
+showPage("page2");
 
 if(!generatedTimestamp){
 
-showPage("page2");
-
 warningBox.classList.remove("hidden");
 
-return;
-
-}
+}else{
 
 warningBox.classList.add("hidden");
 
-showPage("page2");
+}
 
 }
+
+/* =========================
+   GENERATE DEFENSE REPORT
+========================= */
 
 function generateDefense(){
 
 const required = [
+
 attacker,
 village,
 arrival,
@@ -635,6 +1041,7 @@ food,
 granary,
 troops,
 needed
+
 ];
 
 for(let field of required){
@@ -653,37 +1060,63 @@ return;
 generatedDefenseText =
 `🛡️ DEFENSE CALL
 
-⚔️ Attacker:
-${attacker.value}
+━━━━━━━━━━
+⏳ TIMING
+━━━━━━━━━━
 
-🏘️ Defense Village:
-${village.value}
+⌛ Start:
+${startDurationText}
 
-📅 Arrival Time:
+📅 Lands:
 ${arrival.value}
 
-🌊 Incoming Waves:
+⏳ Countdown:
+${generatedDiscordText.match(/<t:.*:R>/)[0]}
+
+━━━━━━━━━━
+⚔️ ATTACK
+━━━━━━━━━━
+
+👤 Attacker:
+${attacker.value}
+
+🌊 Waves:
 ${waves.value}
 
-🗼 Wall / Watch Tower:
+━━━━━━━━━━
+🏘️ TARGET
+━━━━━━━━━━
+
+🏛️ Village:
+${village.value}
+
+🧱 Wall / WT:
 ${tower.value}
 
-🍞 Food Situation:
-${food.value}
+━━━━━━━━━━
+🛡️ DEFENSE
+━━━━━━━━━━
 
-🏦 Granary Size:
-${granary.value}
-
-🛡️ Current Defense:
+🛡️ Current:
 ${troops.value}
 
-📦 Extra Troops Needed:
-${needed.value}`;
+⚔️ Needed:
+${needed.value}
+
+🌾 Food:
+${food.value}
+
+🏦 Granary:
+${granary.value}`;
 
 deffOutput.innerText =
 generatedDefenseText;
 
 }
+
+/* =========================
+   COPY DEFENSE
+========================= */
 
 function copyDefense(){
 
