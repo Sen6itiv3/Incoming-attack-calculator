@@ -10,10 +10,6 @@
 
 <style>
 
-/* =========================
-   GLOBAL
-========================= */
-
 *{
   box-sizing:border-box;
 }
@@ -38,10 +34,6 @@ body{
   padding:20px;
 }
 
-/* =========================
-   MAIN CARD
-========================= */
-
 .container{
 
   width:100%;
@@ -62,10 +54,6 @@ body{
   inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
-/* =========================
-   NAVIGATION
-========================= */
-
 .nav{
   display:flex;
   gap:10px;
@@ -84,10 +72,6 @@ body{
   #2563eb,
   #1d4ed8)!important;
 }
-
-/* =========================
-   TYPOGRAPHY
-========================= */
 
 .title{
   text-align:center;
@@ -135,10 +119,6 @@ body{
   font-style:italic;
 }
 
-/* =========================
-   INPUTS
-========================= */
-
 .input-wrapper{
   position:relative;
 }
@@ -184,10 +164,6 @@ body{
 
   font-size:14px;
 }
-
-/* =========================
-   BUTTONS
-========================= */
 
 button{
 
@@ -281,10 +257,6 @@ button:active{
   #22c55e);
 }
 
-/* =========================
-   OUTPUT BOX
-========================= */
-
 .output{
 
   margin-top:18px;
@@ -302,16 +274,12 @@ button:active{
 
   font-size:13px;
 
-  line-height:1.7;
+  line-height:1.55;
 
   color:#dbeafe;
 
   min-height:170px;
 }
-
-/* =========================
-   INFO BOX
-========================= */
 
 .info{
 
@@ -334,10 +302,6 @@ button:active{
   color:#bfdbfe;
 }
 
-/* =========================
-   WARNING
-========================= */
-
 .warning{
 
   background:
@@ -357,17 +321,9 @@ button:active{
   font-size:12px;
 }
 
-/* =========================
-   UTILITIES
-========================= */
-
 .hidden{
   display:none;
 }
-
-/* =========================
-   MOBILE
-========================= */
 
 @media(max-width:480px){
 
@@ -391,10 +347,6 @@ button:active{
 
 <div class="container">
 
-<!-- =========================
-     NAVIGATION
-========================= -->
-
 <div class="nav">
 
 <button
@@ -416,9 +368,7 @@ Defense Call Maker
 
 </div>
 
-<!-- =========================
-     PAGE 1
-========================= -->
+<!-- PAGE 1 -->
 
 <div id="page1">
 
@@ -591,9 +541,7 @@ Paste the timestamp in Discord and everyone will see their local time and live c
 
 </div>
 
-<!-- =========================
-     PAGE 2
-========================= -->
+<!-- PAGE 2 -->
 
 <div id="page2" class="hidden">
 
@@ -634,7 +582,7 @@ class="warning hidden">
 <input class="input-box" id="waves">
 
 <div class="label">
-5. Wall level / Watch Tower level? *
+5. Watch Tower lvl? *
 </div>
 
 <input class="input-box" id="tower">
@@ -696,18 +644,10 @@ onclick="copyDefense()">
 
 <script>
 
-/* =========================
-   GLOBAL STATE
-========================= */
-
 let generatedTimestamp = "";
 let generatedDiscordText = "";
 let generatedDefenseText = "";
 let startDurationText = "";
-
-/* =========================
-   ELEMENTS
-========================= */
 
 const durationInput =
 document.getElementById("durationInput");
@@ -717,10 +657,6 @@ document.getElementById("serverInput");
 
 const generateBtn =
 document.getElementById("generateBtn");
-
-/* =========================
-   BUTTON ENABLE/DISABLE
-========================= */
 
 function updateGenerateButton(){
 
@@ -735,10 +671,6 @@ generateBtn.classList.remove("active");
 
 }
 
-/* =========================
-   INPUT LISTENERS
-========================= */
-
 durationInput.addEventListener(
 "input",
 updateGenerateButton
@@ -749,10 +681,6 @@ serverInput.addEventListener(
 updateGenerateButton
 );
 
-/* =========================
-   CLEAR SINGLE FIELD
-========================= */
-
 function clearField(id){
 
 document.getElementById(id).value = "";
@@ -760,10 +688,6 @@ document.getElementById(id).value = "";
 resetGeneratedData();
 
 }
-
-/* =========================
-   RESET ALL GENERATED DATA
-========================= */
 
 function resetGeneratedData(){
 
@@ -784,10 +708,6 @@ updateGenerateButton();
 
 }
 
-/* =========================
-   PARSE INPUT
-========================= */
-
 function parseInput(str){
 
 let h = 0;
@@ -806,10 +726,6 @@ return (h * 60) + m;
 
 }
 
-/* =========================
-   UPDATE INPUT
-========================= */
-
 function updateInput(total){
 
 total = Math.max(total,0);
@@ -826,10 +742,6 @@ durationInput.value =
 updateGenerateButton();
 
 }
-
-/* =========================
-   QUICK ADD
-========================= */
 
 function addHours(h){
 
@@ -852,10 +764,6 @@ total += m;
 updateInput(total);
 
 }
-
-/* =========================
-   GENERATE TIMER
-========================= */
 
 function generateTimer(){
 
@@ -925,14 +833,9 @@ generatedTimestamp =
 generatedDiscordText =
 `⚔️ Attack Incoming
 
-⏳ Start Duration:
-${startDurationText}
-
-📅 Landing Time:
-<t:${unix}:F>
-
-⏳ Live Countdown:
-<t:${unix}:R>`;
+⌛ Started: ${startDurationText}
+📅 Lands: <t:${unix}:F>
+⏳ Countdown: <t:${unix}:R>`;
 
 output.innerText =
 generatedDiscordText;
@@ -941,10 +844,6 @@ arrival.value =
 `<t:${unix}:F>`;
 
 }
-
-/* =========================
-   COPY TIMER
-========================= */
 
 function copyTimer(){
 
@@ -967,10 +866,6 @@ btn.innerText =
 
 }
 
-/* =========================
-   CLEAR ALL
-========================= */
-
 function clearAll(){
 
 durationInput.value = "";
@@ -979,10 +874,6 @@ serverInput.value = "";
 resetGeneratedData();
 
 }
-
-/* =========================
-   PAGE NAVIGATION
-========================= */
 
 function showPage(id){
 
@@ -1004,10 +895,6 @@ nav2.classList.add("nav-active");
 
 }
 
-/* =========================
-   DEFENSE PAGE CHECK
-========================= */
-
 function goDefensePage(){
 
 showPage("page2");
@@ -1023,10 +910,6 @@ warningBox.classList.add("hidden");
 }
 
 }
-
-/* =========================
-   GENERATE DEFENSE REPORT
-========================= */
 
 function generateDefense(){
 
@@ -1060,63 +943,26 @@ return;
 generatedDefenseText =
 `🛡️ DEFENSE CALL
 
-━━━━━━━━━━
-⏳ TIMING
-━━━━━━━━━━
+⌛ Started: ${startDurationText}
+📅 Lands: ${arrival.value}
+⏳ Countdown: ${generatedDiscordText.match(/<t:.*:R>/)[0]}
 
-⌛ Start:
-${startDurationText}
+👤 Attacker: ${attacker.value}
+🌊 Waves: ${waves.value}
 
-📅 Lands:
-${arrival.value}
+🏛️ Village: ${village.value}
+🗼 Watch Tower lvl: ${tower.value}
 
-⏳ Countdown:
-${generatedDiscordText.match(/<t:.*:R>/)[0]}
+🛡️ Current Defense: ${troops.value}
+⚔️ Extra Troops Needed: ${needed.value}
 
-━━━━━━━━━━
-⚔️ ATTACK
-━━━━━━━━━━
-
-👤 Attacker:
-${attacker.value}
-
-🌊 Waves:
-${waves.value}
-
-━━━━━━━━━━
-🏘️ TARGET
-━━━━━━━━━━
-
-🏛️ Village:
-${village.value}
-
-🧱 Wall / WT:
-${tower.value}
-
-━━━━━━━━━━
-🛡️ DEFENSE
-━━━━━━━━━━
-
-🛡️ Current:
-${troops.value}
-
-⚔️ Needed:
-${needed.value}
-
-🌾 Food:
-${food.value}
-
-🏦 Granary:
-${granary.value}`;
+🌾 Food: ${food.value}
+🏦 Granary: ${granary.value}`;
 
 deffOutput.innerText =
 generatedDefenseText;
 
 }
-
-/* =========================
-   COPY DEFENSE
-========================= */
 
 function copyDefense(){
 
