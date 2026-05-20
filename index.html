@@ -8,6 +8,12 @@
 
 <title>Incoming Attack Calculator</title>
 
+<link rel="icon" type="image/svg+xml"
+href='data:image/svg+xml,
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<text y=".9em" font-size="90">⚔️</text>
+</svg>'>
+
 <style>
 
 *{
@@ -165,6 +171,19 @@ body{
   font-size:14px;
 }
 
+.valid{
+  border:1px solid #22c55e!important;
+}
+
+.valid-indicator{
+  position:absolute;
+  right:40px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#22c55e;
+  font-size:13px;
+}
+
 button{
 
   border:none;
@@ -255,6 +274,10 @@ button:active{
   135deg,
   #16a34a,
   #22c55e);
+
+  opacity:0.45;
+
+  pointer-events:none;
 }
 
 .output{
@@ -274,7 +297,7 @@ button:active{
 
   font-size:13px;
 
-  line-height:1.55;
+  line-height:1.45;
 
   color:#dbeafe;
 
@@ -525,9 +548,10 @@ Your Discord timer will appear here...
 
 <button
 class="copy-btn"
-onclick="copyTimer()">
+id="gotoDefenseBtn"
+onclick="goDefensePage()">
 
-📋 Copy To Discord
+🛡️ Go To Defense Call Maker
 
 </button>
 
@@ -561,58 +585,113 @@ class="warning hidden">
 1. Name of the attacker? *
 </div>
 
-<input class="input-box" id="attacker">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="attacker"
+placeholder="Name of attacker here">
+<div class="clear-input" onclick="clearDefenseField('attacker')">✕</div>
+</div>
 
 <div class="label">
 2. Which village needs defense? *
 </div>
 
-<input class="input-box" id="village">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="village"
+placeholder="Name of your village here">
+<div class="clear-input" onclick="clearDefenseField('village')">✕</div>
+</div>
 
 <div class="label">
 3. Exact time the attack arrives? *
 </div>
 
-<input class="input-box" id="arrival">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="arrival"
+placeholder="Generated automatically">
+<div class="clear-input" onclick="clearDefenseField('arrival')">✕</div>
+</div>
 
 <div class="label">
 4. How many waves incoming? *
 </div>
 
-<input class="input-box" id="waves">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="waves"
+placeholder="Example: 8">
+<div class="clear-input" onclick="clearDefenseField('waves')">✕</div>
+</div>
 
 <div class="label">
 5. Watch Tower lvl? *
 </div>
 
-<input class="input-box" id="tower">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="tower"
+placeholder="Example: 10">
+<div class="clear-input" onclick="clearDefenseField('tower')">✕</div>
+</div>
 
 <div class="label">
 6. Food situation? *
 </div>
 
-<input class="input-box" id="food">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="food"
+placeholder="80k+">
+<div class="clear-input" onclick="clearDefenseField('food')">✕</div>
+</div>
 
 <div class="label">
 7. Total granary size? *
 </div>
 
-<input class="input-box" id="granary">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="granary"
+placeholder="160k">
+<div class="clear-input" onclick="clearDefenseField('granary')">✕</div>
+</div>
 
 <div class="label">
 8. Current defensive troops? *
 </div>
 
-<input class="input-box" id="troops">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="troops"
+placeholder="6k">
+<div class="clear-input" onclick="clearDefenseField('troops')">✕</div>
+</div>
 
 <div class="label">
 9. Extra troops needed? *
 </div>
 
-<input class="input-box" id="needed">
+<div class="input-wrapper">
+<input
+class="input-box required-field"
+id="needed"
+placeholder="20k">
+<div class="clear-input" onclick="clearDefenseField('needed')">✕</div>
+</div>
 
 <button
-class="generate active"
+class="generate"
+id="generateDefenseBtn"
 style="margin-top:22px;"
 onclick="generateDefense()">
 
@@ -630,6 +709,7 @@ Your defense report will appear here...
 
 <button
 class="copy-btn"
+id="copyDefenseBtn"
 onclick="copyDefense()">
 
 📋 Copy To Discord
@@ -658,6 +738,12 @@ document.getElementById("serverInput");
 const generateBtn =
 document.getElementById("generateBtn");
 
+const requiredFields =
+document.querySelectorAll(".required-field");
+
+const generateDefenseBtn =
+document.getElementById("generateDefenseBtn");
+
 function updateGenerateButton(){
 
 if(
@@ -681,6 +767,87 @@ serverInput.addEventListener(
 updateGenerateButton
 );
 
+requiredFields.forEach(field=>{
+
+field.addEventListener("input",()=>{
+
+checkDefenseFields();
+
+});
+
+});
+
+function checkDefenseFields(){
+
+let allFilled = true;
+
+requiredFields.forEach(field=>{
+
+removeIndicator(field);
+
+if(field.value.trim()){
+
+field.classList.add("valid");
+
+addIndicator(field);
+
+}else{
+
+field.classList.remove("valid");
+
+allFilled = false;
+
+}
+
+});
+
+if(allFilled){
+
+generateDefenseBtn.classList.add("active");
+
+}else{
+
+generateDefenseBtn.classList.remove("active");
+
+}
+
+}
+
+function addIndicator(field){
+
+if(field.parentNode.querySelector(".valid-indicator"))
+return;
+
+const icon =
+document.createElement("div");
+
+icon.className = "valid-indicator";
+
+icon.innerText = "➜";
+
+field.parentNode.appendChild(icon);
+
+}
+
+function removeIndicator(field){
+
+const existing =
+field.parentNode.querySelector(".valid-indicator");
+
+if(existing){
+existing.remove();
+}
+
+}
+
+function clearDefenseField(id){
+
+document.getElementById(id).value = "";
+
+checkDefenseFields();
+
+}
+
 function clearField(id){
 
 document.getElementById(id).value = "";
@@ -703,6 +870,14 @@ deffOutput.innerText =
 "Your defense report will appear here...";
 
 arrival.value = "";
+
+document
+.getElementById("gotoDefenseBtn")
+.style.opacity = "0.45";
+
+document
+.getElementById("gotoDefenseBtn")
+.style.pointerEvents = "none";
 
 updateGenerateButton();
 
@@ -771,6 +946,19 @@ let totalMinutes = 0;
 
 if(durationInput.value.trim()){
 
+const valid =
+/^(\d+\s*h)?\s*(\d+\s*m(in)?)?$/i
+.test(durationInput.value.trim());
+
+if(!valid){
+
+output.innerText =
+"❌ Invalid format.";
+
+return;
+
+}
+
 totalMinutes =
 parseInput(durationInput.value);
 
@@ -833,7 +1021,7 @@ generatedTimestamp =
 generatedDiscordText =
 `⚔️ Attack Incoming
 
-⌛ Started: ${startDurationText}
+⌛ Attack spotted: ${startDurationText} ago
 📅 Lands: <t:${unix}:F>
 ⏳ Countdown: <t:${unix}:R>`;
 
@@ -843,26 +1031,13 @@ generatedDiscordText;
 arrival.value =
 `<t:${unix}:F>`;
 
-}
+document
+.getElementById("gotoDefenseBtn")
+.style.opacity = "1";
 
-function copyTimer(){
-
-if(!generatedDiscordText) return;
-
-navigator.clipboard.writeText(
-generatedDiscordText
-);
-
-const btn =
-document.querySelectorAll(".copy-btn")[0];
-
-btn.innerText =
-"✅ Copied Successfully";
-
-setTimeout(()=>{
-btn.innerText =
-"📋 Copy To Discord";
-},1800);
+document
+.getElementById("gotoDefenseBtn")
+.style.pointerEvents = "auto";
 
 }
 
@@ -913,54 +1088,54 @@ warningBox.classList.add("hidden");
 
 function generateDefense(){
 
-const required = [
+let missing = false;
 
-attacker,
-village,
-arrival,
-waves,
-tower,
-food,
-granary,
-troops,
-needed
-
-];
-
-for(let field of required){
+requiredFields.forEach(field=>{
 
 if(!field.value.trim()){
+missing = true;
+}
+
+});
+
+if(missing){
 
 deffOutput.innerText =
-"❌ Please fill in all required fields.";
+"❌ Please fill in all the fields.";
 
 return;
-
-}
 
 }
 
 generatedDefenseText =
 `🛡️ DEFENSE CALL
 
-⌛ Started: ${startDurationText}
+⌛ Attack spotted: ${startDurationText} ago
 📅 Lands: ${arrival.value}
 ⏳ Countdown: ${generatedDiscordText.match(/<t:.*:R>/)[0]}
 
 👤 Attacker: ${attacker.value}
 🌊 Waves: ${waves.value}
 
-🏛️ Village: ${village.value}
+🏛️ Target village: ${village.value}
 🗼 Watch Tower lvl: ${tower.value}
 
-🛡️ Current Defense: ${troops.value}
+🛡️ Current Defense in village: ${troops.value}
 ⚔️ Extra Troops Needed: ${needed.value}
 
-🌾 Food: ${food.value}
-🏦 Granary: ${granary.value}`;
+🌾 Current food in village: ${food.value}
+🏦 Granary capacity: ${granary.value}`;
 
 deffOutput.innerText =
 generatedDefenseText;
+
+document
+.getElementById("copyDefenseBtn")
+.style.opacity = "1";
+
+document
+.getElementById("copyDefenseBtn")
+.style.pointerEvents = "auto";
 
 }
 
@@ -973,7 +1148,7 @@ generatedDefenseText
 );
 
 const btn =
-document.querySelectorAll(".copy-btn")[1];
+document.getElementById("copyDefenseBtn");
 
 btn.innerText =
 "✅ Copied Successfully";
